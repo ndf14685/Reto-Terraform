@@ -1,6 +1,6 @@
 provider "helm" {
   kubernetes {
-    config_path = digitalocean_kubernetes_cluster.this.kubeconfig_file_path
+    config_path = "digitalocean_kubernetes_cluster.this.kube_config"
   }
 }
 
