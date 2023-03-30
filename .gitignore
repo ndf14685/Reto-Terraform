@@ -22,3 +22,6 @@ secrets/
 
 # For VIM Users
 *.swp
+
+# For enviroment
+terraform.tfvars

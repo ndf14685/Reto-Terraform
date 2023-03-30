@@ -35,6 +35,18 @@ configuracion de kubectl con mi proyecto
 
 Instalacion de nginx ingress controller usando Helm
 
+Instalacion de Prometheus y Grafana 
 
+Creacion de archivo values.yml para configuracion de Grafana en k8s
+
+Configuracion de host, para que use mi host particular nestorfleitas.ar
 
 Subida a github
+
+Hasta ahi me funciono. Pero no estaba preparado para multiples ambientes. Es por eso que se tiene que crear localmente cuando se quiera implementar el terraforms.tfvars con los valores:
+cluster_name = "NOMBRE_CLUSTER_AMBIENTE"  
+domain               = "DOMINIO_SEGUN_AMBIENTE"
+grafana_admin_password = "PASS_PARA_AMBIENTE"
+
+
+

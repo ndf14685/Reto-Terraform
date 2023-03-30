@@ -27,3 +27,13 @@ variable "node_count" {
   description = "The number of worker nodes"
   default     = 3
 }
+
+variable "domain" {
+  description = "The domain name to use for Grafana"
+  type        = string
+}
+
+variable "grafana_admin_password" {
+  description = "The Grafana admin password"
+  type        = string
+}
