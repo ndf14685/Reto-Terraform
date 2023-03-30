@@ -1,11 +1,11 @@
 variable "do_token" {
   description = "Your DigitalOcean API token"
-  default     = "<your_digital_ocean_token>"
+  #default     = "<your_digital_ocean_token>"  #Variable en entorno local
 }
 
 variable "cluster_name" {
   description = "The name of the Kubernetes cluster"
-  default     = "do-k8s-cluster"
+  default     = "k8s-cluster"
 }
 
 variable "region" {
