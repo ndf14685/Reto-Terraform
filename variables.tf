@@ -15,7 +15,7 @@ variable "region" {
 
 variable "kubernetes_version" {
   description = "The Kubernetes version for the cluster"
-  default     = "1.22.2-do.0" 
+  default     = "1.26.3-do.0" 
 }
 
 variable "node_size" {

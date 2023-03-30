@@ -24,5 +24,6 @@ resource "digitalocean_kubernetes_cluster" "this" {
 }
 
 output "kubeconfig" {
-  value = digitalocean_kubernetes_cluster.this.kubeconfig_raw
+  value = digitalocean_kubernetes_cluster.this.kube_config
+  sensitive = true
 }

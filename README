@@ -23,7 +23,17 @@ Creacion de repo, readme y estructura basica de tf
 
 Creacion de token y carga como variable temporal en mi local
 
-Instalacion de tools: Terraform, Helm, Cliente de Digital Ocean, git, 
+Instalacion de tools: Terraform, Helm, Cliente de Digital Ocean, git, Cliente de digital Ocean --> doctl
+
+Creacion de main.tf
+
+Creacion de variables 
+
+Creacion de outputs.tf
+
+configuracion de kubectl con mi proyecto
+
+Instalacion de nginx ingress controller usando Helm
 
 
 
