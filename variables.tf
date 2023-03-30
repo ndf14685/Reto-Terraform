@@ -15,7 +15,7 @@ variable "region" {
 
 variable "kubernetes_version" {
   description = "The Kubernetes version for the cluster"
-  default     = "1.22.2-do.0" # Puedes cambiar esto a la última versión compatible en DigitalOcean
+  default     = "1.22.2-do.0" 
 }
 
 variable "node_size" {
