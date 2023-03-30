@@ -1,0 +1,16 @@
+# Archivos de Terraform
+*.tfstate
+*.tfstate.backup
+*.terraform.lock.hcl
+
+# Directorios de Terraform
+.terraform/
+
+# Archivos de configuración de Kubernetes
+kubeconfig.yaml
+
+# Archivos de Helm
+values.yaml
+
+# Credenciales
+secrets.env
