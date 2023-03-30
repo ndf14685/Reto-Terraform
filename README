@@ -1,0 +1,30 @@
+Reto técnico: Desplegar un clúster de Kubernetes en Digital Ocean con Nginx Ingress Controller, Prometheus y Grafana utilizando Terraform
+
+Objetivo: Implementar una infraestructura de Kubernetes en Digital Ocean que incluya un controlador de ingreso Nginx, Prometheus y Grafana para monitoreo, utilizando Terraform para la automatización de la infraestructura. Esta infraestructura debe ser fácil de replicar en diferentes ambientes (Dev, Staging, Production, etc.) y mantener el código en un repositorio.
+
+Consideraciones:
+La infraestructura debe ser fácil de replicar en distintos ambientes (Dev, Staging, Production, etc.) utilizando variables y archivos de configuración específicos para cada ambiente.
+Utilizar un enfoque modular para el código de Terraform, lo que permitirá una fácil actualización y mantenimiento de las diferentes versiones de la infraestructura.
+Crear un archivo README.md con información detallada sobre cómo utilizar y desplegar el código de Terraform, incluyendo requisitos previos, instrucciones de configuración y comandos de despliegue.
+Utilizar Terraform "Remote State" para facilitar el trabajo colaborativo y mantener un estado centralizado de la infraestructura.
+No incluir credenciales en el repositorio de código. Utilizar variables de entorno o sistemas de almacenamiento de secretos para manejar las credenciales de forma segura.
+
+Tareas:
+Configure su entorno local con la clave de API de Digital Ocean utilizando variables de entorno o un sistema de almacenamiento de secretos.
+Cree un repositorio de código para almacenar la configuración de Terraform y sus módulos.
+Implemente la infraestructura utilizando un enfoque modular, con módulos para el clúster de Kubernetes, Nginx Ingress Controller, Prometheus y Grafana.
+Utilice archivos de configuración específicos para cada ambiente y variables para personalizar la implementación en cada ambiente.
+Implemente el uso de Terraform "Remote State" para mantener un estado centralizado y facilitar el trabajo colaborativo.
+Documente en el archivo README.md cómo utilizar y desplegar el código de Terraform, incluyendo requisitos previos, instrucciones de configuración y comandos de despliegue.
+
+
+
+Creacion de repo, readme y estructura basica de tf
+
+Creacion de token y carga como variable temporal en mi local
+
+Instalacion de tools: Terraform, Helm, Cliente de Digital Ocean, git, 
+
+
+
+Subida a github
