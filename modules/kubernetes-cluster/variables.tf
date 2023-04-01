@@ -10,7 +10,7 @@ variable "region" {
 
 variable "cluster_name" {
   description = "Nombre del clúster de Kubernetes."
-  default     = "my-k8s-cluster"
+  default     = "MyCluster"
 }
 
 variable "cluster_size" {
@@ -19,6 +19,7 @@ variable "cluster_size" {
 }
 
 variable "kubernetes_version" {
-  description = "Versión de Kubernetes para el clúster."
-  default     = "1.22.2-do.2"
+  description = "Versión de Kubernetes de Dig Ocean para el clúster."
+  default     = "1.26.3-do.0"
+
 }

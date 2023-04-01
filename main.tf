@@ -1,29 +1,19 @@
-terraform {
-  required_providers {
-    digitalocean = {
-      source = "digitalocean/digitalocean"
-    }
-  }
-}
-
 provider "digitalocean" {
-  token = var.do_token
+  token = var.digitalocean_token
 }
 
-resource "digitalocean_kubernetes_cluster" "this" {
-  name   = var.cluster_name
-  region = var.region
+module "kubernetes_cluster" {
+  source = "./modules/kubernetes-cluster"
 
-  version = var.kubernetes_version
-
-  node_pool {
-    name       = "worker-pool"
-    size       = var.node_size
-    node_count = var.node_count
-  }
+  digitalocean_token = var.digitalocean_token
+  region             = var.region
+  cluster_name       = var.cluster_name
+  cluster_size       = var.cluster_size
+  kubernetes_version = var.kubernetes_version
 }
 
-output "kubeconfig" {
-  value = digitalocean_kubernetes_cluster.this.kube_config
-  sensitive = true
+module "prometheus" {
+  source = "./modules/prometheus"
+
+  kubernetes_cluster = module.kubernetes_cluster.kubeconfig
 }

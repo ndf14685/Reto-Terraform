@@ -49,4 +49,23 @@ domain               = "DOMINIO_SEGUN_AMBIENTE"
 grafana_admin_password = "PASS_PARA_AMBIENTE"
 
 
+Ahora sigo con el refactor, para modularizar
 
+Reestucture la estructura de carpetas
+Para poder mantener estado voy a tener que utilizar un S3 de digital ocean
+
+
+Se tuvo que crear por consola grafica el space (bucket) llamado space-dev1 con region en nyc3 
+
+Se cargaron las variables de entorno: 
+DIG_OC_ACCESSKEY y DIG_OC_SECRETKEY
+
+Se requiere generar un archivo en la raiz llamado backend.config y agregarlo al .gitignore. Este tendra este contenido::
+
+access_key = ""
+secret_key = ""
+
+La primera vez se requerira ejecutar el terraform init de esta manera: 
+$env:TF_VAR_access_key=$env:DIG_OC_ACCESSKEY
+$env:TF_VAR_secret_key=$env:DIG_OC_SECRETKEY
+terraform init -backend-config="access_key=$($env:TF_VAR_access_key)" -backend-config="secret_key=$($env:TF_VAR_secret_key)"
