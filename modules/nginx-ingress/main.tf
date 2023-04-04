@@ -55,6 +55,10 @@ resource "helm_release" "nginx_ingress" {
     name  = "controller.service.type"
     value = "LoadBalancer"
   }
+  set {
+    name  = "controller.publishService.enabled"
+    value = "true"
+  }
 }
 
 

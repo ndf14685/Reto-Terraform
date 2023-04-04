@@ -1,13 +1,3 @@
-variable "cluster_id" {
-  type        = string
-  description = "DigitalOcean Kubernetes cluster ID"
-}
-
-variable "cluster_endpoint" {
-  type        = string
-  description = "DigitalOcean Kubernetes cluster endpoint"
-}
-
 variable "kubernetes_cluster" {
   description = "Información del clúster de Kubernetes."
   type = object({

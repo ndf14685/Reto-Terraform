@@ -17,3 +17,10 @@ module "prometheus" {
 
   kubernetes_cluster = module.kubernetes_cluster.kubeconfig
 }
+
+module "nginx_ingress" {
+  source = "./modules/nginx-ingress"
+
+  kubernetes_cluster = module.kubernetes_cluster.kubeconfig
+  do_token           = var.digitalocean_token
+}

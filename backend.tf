@@ -10,6 +10,7 @@ terraform {
     skip_region_validation      = true
     access_key      = "${DIG_OC_ACCESSKEY}"
     secret_key      = "${DIG_OC_SECRETKEY}"
+#    token           = "${TF_VAR_do_token}"
   }
 }
 

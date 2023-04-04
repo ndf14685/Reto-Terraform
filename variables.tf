@@ -1,6 +1,6 @@
 variable "digitalocean_token" {
   description = "Token de la API de DigitalOcean."
-  default = "dop_v1_5c23e664a7c008ffba6942ece0196f5fa7e2712c73da91835ac188a79d3c0b4d"
+  default = "COLOQUE_SU_API_TOKEN_DEDIGITAL_OCEAN_AQUI"
 }
 
 variable "region" {
