@@ -1,6 +1,6 @@
 variable "digitalocean_token" {
   description = "Token de la API de DigitalOcean."
-  default = "COLOQUE_SU_API_TOKEN_DEDIGITAL_OCEAN_AQUI"
+  default = "dop_v1_87ceebc1201854cb312ab4e7babd6cda8cc8d4b768412a64479f333507babd11"
 }
 
 variable "region" {
@@ -21,4 +21,8 @@ variable "cluster_size" {
 variable "kubernetes_version" {
   description = "Versión de Kubernetes para el clúster."
   default     = "1.22.2-do.2"
+}
+variable "domain" {
+  description = "The domain name to use for Grafana"
+  type        = string
 }

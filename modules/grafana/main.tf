@@ -6,11 +6,27 @@ terraform {
     }
   }
 }
+locals {
+  kubeconfig = {
+    host                   = var.kubernetes_cluster.host
+    cluster_ca_certificate = var.kubernetes_cluster.cluster_ca_certificate
+    token                  = var.kubernetes_cluster.token
+  }
+}
+
+
+provider "kubernetes" {
+    host                   = local.kubeconfig.host
+    cluster_ca_certificate = base64decode(local.kubeconfig.cluster_ca_certificate)
+    token                  = local.kubeconfig.token
+}
+
+
 provider "helm" {
   kubernetes {
-    host                   = var.cluster_endpoint
-    token                  = var.cluster_token
-    cluster_ca_certificate = base64decode(var.cluster_ca_certificate)
+    host                   = local.kubeconfig.host
+    cluster_ca_certificate = base64decode(local.kubeconfig.cluster_ca_certificate)
+    token                  = local.kubeconfig.token
   }
 }
 
@@ -21,7 +37,7 @@ provider "digitalocean" {
 resource "helm_release" "grafana" {
   name       = "grafana"
   repository = "https://grafana.github.io/helm-charts"
-  chart      = "grafana"
+  chart      = "grafana/grafana"
 
   set {
     name  = "persistence.size"
@@ -30,6 +46,17 @@ resource "helm_release" "grafana" {
 
   set {
     name  = "adminPassword"
-    value = "admin"
+    value = var.grafana_admin_password
+  }
+  set {
+    name  = "service.type"
+    value = "LoadBalancer"
+  }
+}
+
+resource "kubernetes_service" "grafana_service" {
+  metadata {
+    name      = module.grafana.grafana_service.name
+    namespace = module.grafana.grafana_service.namespace
   }
 }
