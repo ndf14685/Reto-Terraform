@@ -1,71 +1,118 @@
-Reto técnico: Desplegar un clúster de Kubernetes en Digital Ocean con Nginx Ingress Controller, Prometheus y Grafana utilizando Terraform
+   Despliegue de un clúster de Kubernetes en Digital Ocean con Nginx Ingress Controller, Prometheus y Grafana utilizando Terraform
+Objetivo
+Implementar una infraestructura de Kubernetes en Digital Ocean que incluya un controlador de ingreso Nginx, Prometheus y Grafana para monitoreo, utilizando Terraform para la automatización de la infraestructura. Esta infraestructura debe ser fácil de replicar en diferentes ambientes (Dev, Staging, Production, etc.) y mantener el código en un repositorio.
 
-Objetivo: Implementar una infraestructura de Kubernetes en Digital Ocean que incluya un controlador de ingreso Nginx, Prometheus y Grafana para monitoreo, utilizando Terraform para la automatización de la infraestructura. Esta infraestructura debe ser fácil de replicar en diferentes ambientes (Dev, Staging, Production, etc.) y mantener el código en un repositorio.
+Pre-requisitos
+Cuenta en Digital Ocean.
+Token de acceso personal (API Key) de Digital Ocean.
+Herramientas instaladas: Terraform, Helm, Cliente de Digital Ocean (doctl), git y kubectl.
+Procedimiento
+Crear un nuevo repositorio en GitHub o en otro proveedor de repositorios Git. Incluir un archivo README.md para describir el propósito del repositorio y la estructura básica de los archivos de Terraform.
 
-Consideraciones:
-La infraestructura debe ser fácil de replicar en distintos ambientes (Dev, Staging, Production, etc.) utilizando variables y archivos de configuración específicos para cada ambiente.
-Utilizar un enfoque modular para el código de Terraform, lo que permitirá una fácil actualización y mantenimiento de las diferentes versiones de la infraestructura.
-Crear un archivo README.md con información detallada sobre cómo utilizar y desplegar el código de Terraform, incluyendo requisitos previos, instrucciones de configuración y comandos de despliegue.
-Utilizar Terraform "Remote State" para facilitar el trabajo colaborativo y mantener un estado centralizado de la infraestructura.
-No incluir credenciales en el repositorio de código. Utilizar variables de entorno o sistemas de almacenamiento de secretos para manejar las credenciales de forma segura.
+Clonar el repositorio en local:
 
-Tareas:
-Configure su entorno local con la clave de API de Digital Ocean utilizando variables de entorno o un sistema de almacenamiento de secretos.
-Cree un repositorio de código para almacenar la configuración de Terraform y sus módulos.
-Implemente la infraestructura utilizando un enfoque modular, con módulos para el clúster de Kubernetes, Nginx Ingress Controller, Prometheus y Grafana.
-Utilice archivos de configuración específicos para cada ambiente y variables para personalizar la implementación en cada ambiente.
-Implemente el uso de Terraform "Remote State" para mantener un estado centralizado y facilitar el trabajo colaborativo.
-Documente en el archivo README.md cómo utilizar y desplegar el código de Terraform, incluyendo requisitos previos, instrucciones de configuración y comandos de despliegue.
+```git clone <URL_DEL_REPOSITORIO>```
+Navegar al directorio del repositorio clonado y crear la estructura básica de archivos de Terraform:
+arduino
+```main.tf
+variables.tf
+outputs.tf
+backend.config
+```
+
+Agregar backend.config al archivo .gitignore para evitar subir información sensible al repositorio.
+
+Configurar las credenciales de acceso a Digital Ocean en el entorno local:
+
+PowerShell:
+
+```$Env:DIGITALOCEAN_ACCESS_TOKEN = "<YOUR_ACCESS_TOKEN>"```
 
 
+```set DIGITALOCEAN_ACCESS_TOKEN=<YOUR_ACCESS_TOKEN>```
 
-Creacion de repo, readme y estructura basica de tf
+Crear la estructura de carpetas para los módulos Terraform y el archivo values.yml para la configuración de Grafana en Kubernetes.
 
-Creacion de token y carga como variable temporal en mi local
+Configurar el archivo main.tf para crear el clúster de Kubernetes, el controlador de ingreso Nginx, Prometheus y Grafana.
 
-Instalacion de tools: Terraform, Helm, Cliente de Digital Ocean, git, Cliente de digital Ocean --> doctl
+Configurar el archivo variables.tf para incluir todas las variables necesarias para la creación de los recursos.
 
-Creacion de main.tf
+Configurar el archivo outputs.tf para obtener la información de salida relevante, como las direcciones IP de los servicios.
 
-Creacion de variables 
+Configurar kubectl para utilizar el clúster de Kubernetes creado:
 
-Creacion de outputs.tf
 
-configuracion de kubectl con mi proyecto
+```doctl kubernetes cluster kubeconfig save <CLUSTER_ID>```
 
-Instalacion de nginx ingress controller usando Helm
+Instalar el controlador de ingreso Nginx, Prometheus y Grafana utilizando Helm.
 
-Instalacion de Prometheus y Grafana 
+Configurar el archivo values.yml para personalizar la configuración de Grafana en Kubernetes.
 
-Creacion de archivo values.yml para configuracion de Grafana en k8s
+Configurar el dominio personalizado en el archivo variables.tf.
 
-Configuracion de host, para que use mi host particular nestorfleitas.ar
+Subir los cambios al repositorio Git:
 
-Subida a github
+```
+git add .
+git commit -m "Configuración inicial"
+git push
+```
 
-Hasta ahi me funciono. Pero no estaba preparado para multiples ambientes. Es por eso que se tiene que crear localmente cuando se quiera implementar el terraforms.tfvars con los valores:
-cluster_name = "NOMBRE_CLUSTER_AMBIENTE"  
-domain               = "DOMINIO_SEGUN_AMBIENTE"
+
+Crear un archivo terraform.tfvars para cada ambiente (Dev, Staging, Production, etc.) y establecer los valores específicos para cada ambiente:
+```
+cluster_name = "NOMBRE_CLUSTER_AMBIENTE"
+domain = "DOMINIO_SEGUN_AMBIENTE"
 grafana_admin_password = "PASS_PARA_AMBIENTE"
+```
 
+Configurar el backend de Terraform para almacenar el estado en un Space de Digital Ocean:
+Crear un Space en Digital Ocean desde la consola gráfica.
 
-Ahora sigo con el refactor, para modularizar
+Establecer las variables de entorno
 
-Reestucture la estructura de carpetas
-Para poder mantener estado voy a tener que utilizar un S3 de digital ocean
+DIG_OC_ACCESSKEY y DIG_OC_SECRETKEY con las credenciales de acceso al Space.
 
+Crear un archivo backend.config en la raíz del repositorio con el siguiente contenido:
 
-Se tuvo que crear por consola grafica el space (bucket) llamado space-dev1 con region en nyc3 
-
-Se cargaron las variables de entorno: 
-DIG_OC_ACCESSKEY y DIG_OC_SECRETKEY
-
-Se requiere generar un archivo en la raiz llamado backend.config y agregarlo al .gitignore. Este tendra este contenido::
-
+```
 access_key = ""
 secret_key = ""
+```
 
-La primera vez se requerira ejecutar el terraform init de esta manera: 
+Inicializar Terraform con el backend de Digital Ocean configurado:
+PowerShell:
+
+```
 $env:TF_VAR_access_key=$env:DIG_OC_ACCESSKEY
 $env:TF_VAR_secret_key=$env:DIG_OC_SECRETKEY
 terraform init -backend-config="access_key=$($env:TF_VAR_access_key)" -backend-config="secret_key=$($env:TF_VAR_secret_key)"
+```
+
+
+Ejecutar Terraform para crear o actualizar la infraestructura en función de los archivos de configuración:
+
+```terraform apply```
+
+Ademas hay que considerar que necesito obtener la ip a traves de comandos doctl y kubectl, autenticando con el token ambas herramientas: 
+
+```
+doctl auth init
+
+$Env:DIGITALOCEAN_ACCESS_TOKEN = "TU_TOKEN"
+
+doctl auth init
+
+doctl kubernetes cluster list
+
+doctl kubernetes cluster kubeconfig save 58ca802b-a43c-41fd-bc41-2441c9f2c68a451a9234326d567b2c9bba107adb"f7e1fb380d0
+```
+
+Para obtener la dirección IP del servicio Grafana, ejecutar el siguiente comando:
+
+```kubectl get svc grafana -o jsonpath='{.status.loadBalancer.ingress[0].ip}'```
+
+Con estos pasos, se creará un clúster de Kubernetes en Digital Ocean con Nginx Ingress Controller, Prometheus y Grafana utilizando Terraform. La estructura de módulos y la utilización de variables permiten replicar fácilmente la infraestructura en diferentes ambientes y mantener el código en un repositorio.
+
+
+

@@ -20,20 +20,6 @@ resource "digitalocean_kubernetes_cluster" "this" {
     size       = "s-2vcpu-4gb"
     node_count = 3
   }
-#  name   = var.cluster_name
-#  region = var.region
-  
-#  node_pool {
-#    name       = "worker-pool"
-#    size       = var.cluster_size
-#    node_count = 3
-#    auto_scale = true
-#    min_nodes = 1
-#    max_nodes = 3
-#  }
-
-#  version = var.kubernetes_version
-
 
 }
 

@@ -1,6 +1,6 @@
 variable "digitalocean_token" {
   description = "Token de la API de DigitalOcean."
-  default = "dop_v1_87ceebc1201854cb312ab4e7babd6cda8cc8d4b768412a64479f333507babd11"
+  default = "TU_TOKEN_DIG_OCEAN"
 }
 
 variable "region" {
@@ -25,4 +25,10 @@ variable "kubernetes_version" {
 variable "domain" {
   description = "The domain name to use for Grafana"
   type        = string
+  default = "nestorfleitas.ar"
+}
+
+variable "grafana_admin_password" {
+  description = "La contraseña de administrador para Grafana"
+  default     = "admin"
 }

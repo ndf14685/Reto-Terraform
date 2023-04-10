@@ -8,5 +8,5 @@ output "nginx_ingress_service" {
 
 output "grafana_lb_ip" {
   description = "URL del servicio Grafana LoadBalancer"
-  value       = module.grafana.grafana_url
+  value       = module.grafana.grafana_lb_ip
 }

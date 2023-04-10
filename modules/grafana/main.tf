@@ -6,6 +6,7 @@ terraform {
     }
   }
 }
+
 locals {
   kubeconfig = {
     host                   = var.kubernetes_cluster.host
@@ -37,8 +38,9 @@ provider "digitalocean" {
 resource "helm_release" "grafana" {
   name       = "grafana"
   repository = "https://grafana.github.io/helm-charts"
-  chart      = "grafana/grafana"
-
+  chart      = "grafana"
+  #namespace  = kubernetes_namespace.grafana.metadata.name
+  
   set {
     name  = "persistence.size"
     value = "10Gi"
@@ -52,11 +54,32 @@ resource "helm_release" "grafana" {
     name  = "service.type"
     value = "LoadBalancer"
   }
+  
 }
 
-resource "kubernetes_service" "grafana_service" {
+
+
+resource "kubernetes_service" "grafana_another_service" {
   metadata {
-    name      = module.grafana.grafana_service.name
-    namespace = module.grafana.grafana_service.namespace
+    name      = "kubernetes-service"
+    namespace = helm_release.grafana.namespace
+
+    labels = {
+      Terraform = "true"
+    }
+    
+  }
+  spec {
+    selector = {
+      "app.kubernetes.io/instance" = helm_release.grafana.name
+      "app.kubernetes.io/name"     = "grafana"
+    }
+  port {
+    port        = 80
+    target_port = 3000
+  }
+  type = "LoadBalancer"
   }
 }
+
+

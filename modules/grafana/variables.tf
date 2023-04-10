@@ -4,10 +4,6 @@ variable "do_token" {
 #  description = "DigitalOcean API token"
 }
 
-variable "load_balancer_ip" {
-  type        = string
-  description = "Load balancer IP address"
-}
 variable "kubernetes_cluster" {
   description = "Información del clúster de Kubernetes."
   type = object({

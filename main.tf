@@ -31,4 +31,5 @@ module "grafana" {
   kubernetes_cluster     = module.kubernetes_cluster.kubeconfig
   do_token               = var.digitalocean_token
   grafana_admin_password = var.grafana_admin_password
+
 }
