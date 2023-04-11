@@ -2,7 +2,7 @@
 *.tfstate
 *.tfstate.backup
 *.terraform.lock.hcl
-
+*.tfvars
 # Directorios de Terraform
 .terraform/
 

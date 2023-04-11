@@ -6,11 +6,28 @@ terraform {
     }
   }
 }
+
+locals {
+  kubeconfig = {
+    host                   = var.kubernetes_cluster.host
+    cluster_ca_certificate = var.kubernetes_cluster.cluster_ca_certificate
+    token                  = var.kubernetes_cluster.token
+  }
+}
+
+
+provider "kubernetes" {
+    host                   = local.kubeconfig.host
+    cluster_ca_certificate = base64decode(local.kubeconfig.cluster_ca_certificate)
+    token                  = local.kubeconfig.token
+}
+
+
 provider "helm" {
   kubernetes {
-    host                   = var.cluster_endpoint
-    token                  = var.cluster_token
-    cluster_ca_certificate = base64decode(var.cluster_ca_certificate)
+    host                   = local.kubeconfig.host
+    cluster_ca_certificate = base64decode(local.kubeconfig.cluster_ca_certificate)
+    token                  = local.kubeconfig.token
   }
 }
 
@@ -22,7 +39,8 @@ resource "helm_release" "grafana" {
   name       = "grafana"
   repository = "https://grafana.github.io/helm-charts"
   chart      = "grafana"
-
+  #namespace  = kubernetes_namespace.grafana.metadata.name
+  
   set {
     name  = "persistence.size"
     value = "10Gi"
@@ -30,6 +48,38 @@ resource "helm_release" "grafana" {
 
   set {
     name  = "adminPassword"
-    value = "admin"
+    value = var.grafana_admin_password
+  }
+  set {
+    name  = "service.type"
+    value = "LoadBalancer"
+  }
+  
+}
+
+
+
+resource "kubernetes_service" "grafana_another_service" {
+  metadata {
+    name      = "kubernetes-service"
+    namespace = helm_release.grafana.namespace
+
+    labels = {
+      Terraform = "true"
+    }
+    
+  }
+  spec {
+    selector = {
+      "app.kubernetes.io/instance" = helm_release.grafana.name
+      "app.kubernetes.io/name"     = "grafana"
+    }
+  port {
+    port        = 80
+    target_port = 3000
+  }
+  type = "LoadBalancer"
   }
 }
+
+
