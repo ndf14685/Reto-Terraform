@@ -16,8 +16,10 @@ Crear un nuevo repositorio en GitHub o en otro proveedor de repositorios Git. In
 Clonar el repositorio en local:
 
 ```git clone <URL_DEL_REPOSITORIO>```
+
 Navegar al directorio del repositorio clonado y crear la estructura básica de archivos de Terraform:
 arduino
+
 ```main.tf
 variables.tf
 outputs.tf
@@ -64,6 +66,7 @@ git push
 
 
 Crear un archivo terraform.tfvars para cada ambiente (Dev, Staging, Production, etc.) y establecer los valores específicos para cada ambiente:
+
 ```
 cluster_name = "NOMBRE_CLUSTER_AMBIENTE"
 domain = "DOMINIO_SEGUN_AMBIENTE"
