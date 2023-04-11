@@ -1,5 +1,5 @@
 #   Despliegue de un clúster de Kubernetes en Digital Ocean con Nginx Ingress Controller, Prometheus y Grafana utilizando Terraform
-##Objetivo
+## Objetivo
 
 Implementar una infraestructura de Kubernetes en Digital Ocean que incluya un controlador de ingreso Nginx, Prometheus y Grafana para monitoreo, utilizando Terraform para la automatización de la infraestructura. Esta infraestructura debe ser fácil de replicar en diferentes ambientes (Dev, Staging, Production, etc.) y mantener el código en un repositorio.
 
