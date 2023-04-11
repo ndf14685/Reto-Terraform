@@ -18,7 +18,7 @@ Clonar el repositorio en local:
 ```git clone <URL_DEL_REPOSITORIO>```
 
 Navegar al directorio del repositorio clonado y crear la estructura básica de archivos de Terraform:
-arduino
+
 
 ```main.tf
 variables.tf
